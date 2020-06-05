@@ -7,20 +7,25 @@
  */
 
 import React from 'react';
-import {SafeAreaView, View, StatusBar} from 'react-native';
+import {SafeAreaView, View, StatusBar, Text} from 'react-native';
 
-import GankHome from './gank/GankHome';
+import RootNavigator from './gank/GankGirlStack';
+import {Provider} from 'react-redux';
+import store from './redux/store';
 
 const App: () => React$Node = () => {
   return (
-    <>
-      <StatusBar barStyle="dark-content" />
-      <SafeAreaView style={{flex: 1}}>
-        <View>
-          <GankHome />
-        </View>
-      </SafeAreaView>
-    </>
+    <Provider store={store}>
+      <>
+        <StatusBar barStyle="dark-content" />
+        <SafeAreaView style={{flex: 1}}>
+          {/* <View>
+          <Text>222</Text>
+        </View> */}
+          <RootNavigator />
+        </SafeAreaView>
+      </>
+    </Provider>
   );
 };
 

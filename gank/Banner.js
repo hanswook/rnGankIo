@@ -6,7 +6,9 @@ import {
   View,
   ScrollView,
   Text,
+  Alert,
 } from 'react-native';
+import {navigation} from '@react-navigation/native';
 
 // export default
 export default class Banner extends Component {
@@ -20,8 +22,6 @@ export default class Banner extends Component {
     };
     // const screenHeight = Math.round(Dimensions.get('window').height);
     this.image = this.state.dataSource.map((value, i) => {
-      console.log('this.image:' + i);
-
       return (
         <BannerImage
           key={i}
@@ -31,6 +31,7 @@ export default class Banner extends Component {
             photoUrl: value.image,
             targetTo: i,
           }}
+          navigation={this.props.navigation}
         />
       );
     });
@@ -95,12 +96,14 @@ class BannerImage extends Component {
       dataModel: props.dataModel,
       width: props.width,
       height: props.height,
+      navigation: props.navigation,
     };
   }
 
   handleClick(link) {
     console.log('link:' + link);
     DeviceEventEmitter.emit('checkBannerDetail', link);
+    this.state.navigation.push('GankGirlPage', {link: link});
   }
 
   render() {
@@ -115,7 +118,7 @@ class BannerImage extends Component {
       //    </TouchableWithoutFeedback>
 
       <TouchableWithoutFeedback
-        onPress={() => this.handleClick(this.state.dataModel.targetTo)}>
+        onPress={() => this.handleClick(this.state.dataModel.photoUrl)}>
         <Image
           source={{uri: this.state.dataModel.photoUrl}}
           style={{width: this.props.width, height: '100%'}}
