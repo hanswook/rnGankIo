@@ -5,6 +5,8 @@ import actions from './actions';
 const initialState = {
   girls: [],
   girlPage: 1,
+  girlIsLoading: false,
+  bannerData: [],
 };
 
 export default handleActions(
@@ -18,10 +20,7 @@ export default handleActions(
     [actions.addGirls](state, {payload}) {
       return {
         ...state,
-        girls: {
-          ...state.girls,
-          ...payload.girls,
-        },
+        girls: [...state.girls, ...payload.girls],
       };
     },
     [actions.changeGirlPage](state, {payload}) {
@@ -30,6 +29,20 @@ export default handleActions(
         girlPage: payload.girlPage,
       };
     },
+    [actions.toggleGirlsLoading](state, {payload}) {
+      return {
+        ...state,
+        girlIsLoading: payload.girlIsLoading,
+      };
+    },
+    [actions.addGirlsBanner](state, {payload}) {
+      return {
+        ...state,
+        bannerData: payload.bannerData,
+      };
+    },
   },
   initialState,
 );
+
+export const getCurrentState = (state) => state;

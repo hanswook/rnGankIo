@@ -7,6 +7,8 @@ export default connect(
     return {
       girls: state.girls,
       girlPage: state.girlPage,
+      girlIsLoading: state.girlIsLoading,
+      bannerData: state.bannerData,
     };
   },
 
@@ -20,6 +22,12 @@ export default connect(
       },
       changeGirlPage(girlPage) {
         dispatch(actions.changeGirlPage({girlPage}));
+      },
+      fetchGirls() {
+        dispatch(actions.fetchGirls());
+      },
+      fetchGirlsBanner() {
+        dispatch(actions.fetchGirlsBanner());
       },
     };
   },

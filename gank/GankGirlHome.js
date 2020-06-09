@@ -8,68 +8,13 @@ import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 export default class GankGirlHome extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      bannerData: [],
-      girls: [],
-      girlPage: 1,
-      loadEnd: false,
-    };
-    this.fetchBanner(1);
-    this.fetchGirl();
+    this.props.fetchGirlsBanner();
+    this.props.fetchGirls();
     this.screenWidth = Math.round(Dimensions.get('window').width);
   }
 
   loadMore() {
-    this.setState(
-      {
-        girlPage: this.state.girlPage + 1,
-      },
-      () => {
-        console.log('loadMore girlPage:' + this.state.girlPage);
-        this.fetchGirl();
-      },
-    );
-  }
-  fetchBanner(page) {
-    axios
-      .create()
-      .get('https://gank.io/api/v2/banners')
-      .then((res) => {
-        let data = this.state.bannerData.concat(res.data.data);
-        this.setState({
-          bannerData: data,
-        });
-      })
-      .catch((error) => {
-        console.log('test axios error:' + error);
-      });
-  }
-  fetchGirl() {
-    console.log('loadMore girlPage:' + this.state.girlPage);
-    if (this.state.loadEnd) {
-      return;
-    }
-    axios
-      .create()
-      .get(
-        'https://gank.io/api/v2/data/category/Girl/type/Girl/page/' +
-          this.state.girlPage +
-          '/count/10',
-      )
-      .then((res) => {
-        let data = this.state.girls.concat(res.data.data);
-        if (res.data.data.length < 10) {
-          this.setState({
-            loadEnd: true,
-          });
-        }
-        this.setState({
-          girls: data,
-        });
-      })
-      .catch((error) => {
-        console.log('test axios error:' + error);
-      });
+    this.props.fetchGirls();
   }
 
   renderItem(item, index, onClick) {
@@ -93,7 +38,7 @@ export default class GankGirlHome extends Component {
     return (
       <Banner
         navigation={this.props.navigation}
-        dataSource={this.state.bannerData}
+        dataSource={this.props.bannerData}
         height={250}
         width={this.screenWidth}
       />
@@ -116,19 +61,19 @@ export default class GankGirlHome extends Component {
   }
 
   render() {
-    let girls = this.state.girls;
-    // console.log('girls:' + girls.length);
+    let girls = this.props.girls;
+    console.log('girls:' + girls.length);
     // console.log('girls:' + JSON.stringify(girls));
     return (
       <View>
         <FlatList
-          data={this.state.girls}
+          data={this.props.girls}
           renderItem={({item, index}) =>
             this.renderItem(item, index, () => {
-              // this.props.navigation.push('GankGirlPage', {link: item.url});
+              this.props.navigation.push('GankGirlPage', {link: item.url});
               // this.props.addGirls(this.state.girls);
               // this.props.addGirl(item);
-              this.props.changeGirlPage(index);
+              // this.props.changeGirlPage(index);
             })
           }
           ListHeaderComponent={() => this.genHeader()}
