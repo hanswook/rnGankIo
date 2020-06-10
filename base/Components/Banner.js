@@ -103,7 +103,7 @@ class BannerImage extends Component {
   handleClick(link) {
     console.log('link:' + link);
     DeviceEventEmitter.emit('checkBannerDetail', link);
-    this.state.navigation.push('GankGirlPage', {link: link});
+    this.state.navigation.push('FullScreenImagePage', {link: link});
   }
 
   render() {

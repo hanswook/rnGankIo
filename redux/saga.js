@@ -46,8 +46,8 @@ function* fetchGirlsBanner() {
   } catch (error) {
     console.log(error);
   }
-  let state = yield select(getCurrentState);
-  console.log('fetchGirls state:' + JSON.stringify(state));
+  // let state = yield select(getCurrentState);
+  // console.log('fetchGirls state:' + JSON.stringify(state));
 }
 
 export default function* () {

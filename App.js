@@ -17,11 +17,8 @@ const App: () => React$Node = () => {
   return (
     <Provider store={store}>
       <>
-        <StatusBar barStyle="dark-content" />
+        <StatusBar barStyle="white-content" />
         <SafeAreaView style={{flex: 1}}>
-          {/* <View>
-          <Text>222</Text>
-        </View> */}
           <RootNavigator />
         </SafeAreaView>
       </>
